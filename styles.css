@@ -7,15 +7,15 @@
     --linear-botes: linear-gradient(180deg, #B872FF 0%, #144480 100%);
 }
 
-[data-contexto="foco"] {
+[data-contexto="focus"] {
     --main-bg-color: linear-gradient(180deg, #8B1FF8 0%, #041832 48.44%, #01080E 100%);
 }
 
-[data-contexto="descanso-curto"] {
+[data-contexto="short-rest"] {
     --main-bg-color: linear-gradient(180deg, #0F725C 0%, #041832 48.44%, #01080E 100%);
 }
 
-[data-contexto="descanso-longo"] {
+[data-contexto="long-rest"] {
     --main-bg-color: linear-gradient(180deg, #1875E9 0%, #041832 48.44%, #01080E 100%);
 }
 
@@ -229,14 +229,14 @@ h1, h2, h3, h4, h5, h6 {
 
 /* fim - toggle */
 
-/* Para Tablets */
+/* For tablets */
 @media (max-width: 1024px) and (min-width: 768px) {
     .app__section-banner-container {
         width: 48rem;
     }
 }
 
-/* Para Celulares */
+/* For smartphones */
 @media (max-width: 767px) {
     .app__section-banner-container {
         width: 32rem;
