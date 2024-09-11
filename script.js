@@ -3,11 +3,18 @@ const focusBtn = document.querySelector('.app__card-button--focus');
 const shortRestBtn = document.querySelector('.app__card-button--short');
 const longRestBtn = document.querySelector('.app__card-button--long');
 const buttons = document.querySelectorAll('.app__card-button');
+const screenTimer = document.getElementById('timer');
+const startPauseBtn = document.getElementById('start-pause');
+const startPauseBtnText = document.querySelector('#start-pause span');
+const startPauseBtnIcon = document.querySelector('.app__card-primary-button-icon');
 const banner = document.querySelector('.app__image');
 const title = document.querySelector('.app__title');
 const focusMusicInput = document.getElementById('alter-music');
 const music = new Audio('audios/luna-rise-part-one.mp3');
 music.loop = true;
+
+let seconds = 1500;
+let idInterval = null;
 
 focusMusicInput.addEventListener('change', () => {
     if (music.paused) {
@@ -18,21 +25,26 @@ focusMusicInput.addEventListener('change', () => {
 })
 
 focusBtn.addEventListener('click', () => {
+    seconds = 1500;
     changeContext('focus');
     focusBtn.classList.add('active');
 })
 
 shortRestBtn.addEventListener('click', () => {
+    seconds = 300;
     changeContext('short-rest');
     shortRestBtn.classList.add('active');
 })
 
 longRestBtn.addEventListener('click', () => {
+    seconds = 900;
     changeContext('long-rest');
     longRestBtn.classList.add('active');
 })
 
 function changeContext(context) {
+    showTimer();
+
     buttons.forEach(function(context) {
         context.classList.remove('active');
     });
@@ -61,3 +73,42 @@ function changeContext(context) {
             break;
     }
 }
+
+const timer = () => {
+    if (seconds <= 0) {
+        alert('Time is up!');
+        stop();
+        return
+    }
+
+    seconds -= 1;
+    showTimer();
+}
+
+startPauseBtn.addEventListener('click', startOrPause);
+
+function startOrPause() {
+    if (idInterval) {
+        stop();
+        return
+    }
+
+    idInterval = setInterval(timer, 1000);
+    startPauseBtnText.textContent = "Pause";
+    startPauseBtnIcon.src = "./images/pause.png";
+}
+
+function stop() {
+    clearInterval(idInterval);
+    idInterval = null;
+    startPauseBtnText.textContent = "Restart";
+    startPauseBtnIcon.src = "./images/play_arrow.png";
+}
+
+function showTimer() {
+    const time = new Date(seconds * 1000); 
+    const formattedTime = time.toLocaleTimeString('pt-Br', {minute: '2-digit', second: '2-digit'});
+    screenTimer.innerHTML = `${formattedTime}`;
+}
+
+showTimer();
