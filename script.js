@@ -77,6 +77,11 @@ function changeContext(context) {
 const timer = () => {
     if (seconds <= 0) {
         alert('Time is up!');
+        const activeFocus = html.getAttribute('data-context') === 'focus';
+        if (activeFocus) {
+            const event = new CustomEvent('CompletedFocus');
+            document.dispatchEvent(event);
+        }
         stop();
         return
     }
