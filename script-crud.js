@@ -3,8 +3,10 @@ const addTaskForm = document.querySelector('.app__form-add-task');
 const textarea = document.querySelector('.app__form-textarea');
 const tasksContainer = document.querySelector('.app__section-task-list');
 const inProgressTaskDescription = document.querySelector('.app__section-active-task-description');
+const removeCompletedTasksButton = document.getElementById('btn-remove-completed');
+const removeAllTasksButton = document.getElementById('btn-remove-all');
 
-const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
 let selectedTask = null;
 let selectedTaskLi = null;
 
@@ -110,3 +112,16 @@ document.addEventListener('CompletedFocus', () => {
         updateTasks();
     }
 });
+
+const removeTasks = (onlyCompletedTasks) => {
+    const selector = onlyCompletedTasks ? '.app__section-task-list-item-complete' : '.app__section-task-list-item';
+    console.log(document.querySelectorAll(selector))
+    document.querySelectorAll(selector).forEach(element => {
+        element.remove();
+    });
+    tasks = onlyCompletedTasks ? tasks.filter(task => !task.completed) : [];
+    updateTasks();
+}
+
+removeCompletedTasksButton.onclick = () => removeTasks(true);
+removeAllTasksButton.onclick = () => removeTasks(false);
